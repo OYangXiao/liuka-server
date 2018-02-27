@@ -1,0 +1,32 @@
+{
+  "name": "liuka_node_server",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "product": "NODE_ENV=production node --harmony app.js",
+    "start": "node ./node_modules/nodemon/bin/nodemon.js --harmony ./dist/app.js",
+    "watch": "node ./node_modules/typescript/bin/tsc --watch"
+  },
+  "dependencies": {
+    "koa": "^2.5.0",
+    "koa-bodyparser": "^4.2.0",
+    "koa-logger": "^3.1.0",
+    "mongodb": "^3.0.2",
+    "mongoose": "^5.0.4",
+    "nodemailer": "^4.4.2"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.0.44",
+    "@types/koa-bodyparser": "^4.2.0",
+    "@types/koa-logger": "^3.1.0",
+    "@types/node": "^9.4.6",
+    "nodemon": "^1.15.0",
+    "typescript": "^2.7.2"
+  },
+  "nodemonConfig": {
+    "verbose": true,
+    "watch": [
+      "dist"
+    ]
+  }
+}
