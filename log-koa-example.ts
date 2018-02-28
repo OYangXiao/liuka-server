@@ -1,6 +1,5 @@
 import * as Koa from 'koa';
 
-import { config } from './config';
 
 
 
@@ -19,7 +18,7 @@ interface ILogData {
 }
 
 function outputLog(data: Partial<ILogData>, thrownError: any) {
-    if (config.prettyLog) {
+    if (true /*config.prettyLog*/) {
         console.log(`${data.statusCode} ${data.method} ${data.url} - ${data.responseTime}ms`);
         if (thrownError) {
             console.error(thrownError);
