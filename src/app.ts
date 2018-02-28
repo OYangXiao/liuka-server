@@ -11,7 +11,7 @@ import http from 'http';
 import logger from 'koa-logger'
 import bodyParser from 'koa-bodyparser'
 
-import { config } from './config'
+import * as config from './configs'
 import { router } from './router'
 import { errMsgs } from './err-msgs'
 
