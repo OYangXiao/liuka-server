@@ -12,37 +12,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 }
 Object.defineProperty(exports, "__esModule", { value: true });
 const koa_router_1 = __importDefault(require("koa-router"));
+const koa_bodyparser_1 = __importDefault(require("koa-bodyparser"));
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const apollo_server_koa_1 = require("apollo-server-koa");
-const graphql_tools_1 = require("graphql-tools");
+const example_1 = require("./graphql/example");
 exports.router = new koa_router_1.default();
-const books = [
-    {
-        title: "Harry Potter and the Sorcerer's stone",
-        author: 'J.K. Rowling',
-    },
-    {
-        title: 'Jurassic Park',
-        author: 'Michael Crichton',
-    },
-];
-const typeDefs = `
-    type Query { books: [Book] }
-    type Book { title: String, author: String }
-  `;
-const resolvers = {
-    Query: { books: () => books },
-};
-const schema = graphql_tools_1.makeExecutableSchema({
-    typeDefs,
-    resolvers,
-});
-exports.router.get('/graphql', apollo_server_koa_1.graphqlKoa({ schema: schema }));
-exports.router.post('/graphql', apollo_server_koa_1.graphqlKoa({ schema: schema }));
+exports.router.get('/graphql', apollo_server_koa_1.graphqlKoa({ schema: example_1.schema }));
+exports.router.post('/graphql', koa_bodyparser_1.default({ enableTypes: ['json'] }), apollo_server_koa_1.graphqlKoa({ schema: example_1.schema }));
+exports.router.get('/graphiql', apollo_server_koa_1.graphiqlKoa({ endpointURL: '/graphql' }));
 const file = fs_1.default.createReadStream(path_1.default.join(__dirname, './public/index.html'));
 exports.router.get('/', (ctx) => __awaiter(this, void 0, void 0, function* () {
     ctx.type = 'html';
     ctx.body = file;
 }));
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicm91dGVyLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vc3JjL3JvdXRlci50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7O0FBQUEsNERBQWdDO0FBQ2hDLDRDQUFtQjtBQUNuQixnREFBdUI7QUFDdkIseURBQThDO0FBQzlDLGlEQUFvRDtBQUV2QyxRQUFBLE1BQU0sR0FBRyxJQUFJLG9CQUFNLEVBQUUsQ0FBQztBQUduQyxNQUFNLEtBQUssR0FBRztJQUNWO1FBQ0ksS0FBSyxFQUFFLHVDQUF1QztRQUM5QyxNQUFNLEVBQUUsY0FBYztLQUN6QjtJQUNEO1FBQ0ksS0FBSyxFQUFFLGVBQWU7UUFDdEIsTUFBTSxFQUFFLGtCQUFrQjtLQUM3QjtDQUNKLENBQUM7QUFHRixNQUFNLFFBQVEsR0FBRzs7O0dBR2QsQ0FBQztBQUdKLE1BQU0sU0FBUyxHQUFHO0lBQ2QsS0FBSyxFQUFFLEVBQUUsS0FBSyxFQUFFLEdBQUcsRUFBRSxDQUFDLEtBQUssRUFBRTtDQUNoQyxDQUFDO0FBR0YsTUFBTSxNQUFNLEdBQUcsb0NBQW9CLENBQUM7SUFDaEMsUUFBUTtJQUNSLFNBQVM7Q0FDWixDQUFDLENBQUM7QUFFSCxjQUFNLENBQUMsR0FBRyxDQUFDLFVBQVUsRUFBRSw4QkFBVSxDQUFDLEVBQUUsTUFBTSxFQUFFLE1BQU0sRUFBRSxDQUFDLENBQUMsQ0FBQTtBQUN0RCxjQUFNLENBQUMsSUFBSSxDQUFDLFVBQVUsRUFBRSw4QkFBVSxDQUFDLEVBQUUsTUFBTSxFQUFFLE1BQU0sRUFBRSxDQUFDLENBQUMsQ0FBQTtBQUl2RCxNQUFNLElBQUksR0FBRyxZQUFFLENBQUMsZ0JBQWdCLENBQUMsY0FBSSxDQUFDLElBQUksQ0FBQyxTQUFTLEVBQUUscUJBQXFCLENBQUMsQ0FBQyxDQUFBO0FBQzdFLGNBQU0sQ0FBQyxHQUFHLENBQUMsR0FBRyxFQUFFLENBQU8sR0FBRyxFQUFFLEVBQUU7SUFDMUIsR0FBRyxDQUFDLElBQUksR0FBRyxNQUFNLENBQUM7SUFFbEIsR0FBRyxDQUFDLElBQUksR0FBRyxJQUFJLENBQUE7QUFDbkIsQ0FBQyxDQUFBLENBQUMsQ0FBQyJ9
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicm91dGVyLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vc3JjL3JvdXRlci50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7O0FBQUEsNERBQWdDO0FBQ2hDLG9FQUF1QztBQUN2Qyw0Q0FBbUI7QUFDbkIsZ0RBQXVCO0FBQ3ZCLHlEQUEyRDtBQUUzRCwrQ0FBMEM7QUFFN0IsUUFBQSxNQUFNLEdBQUcsSUFBSSxvQkFBTSxFQUFFLENBQUM7QUFFbkMsY0FBTSxDQUFDLEdBQUcsQ0FBQyxVQUFVLEVBQUUsOEJBQVUsQ0FBQyxFQUFFLE1BQU0sRUFBRSxnQkFBTSxFQUFFLENBQUMsQ0FBQyxDQUFBO0FBR3RELGNBQU0sQ0FBQyxJQUFJLENBQUMsVUFBVSxFQUFFLHdCQUFVLENBQUMsRUFBRSxXQUFXLEVBQUUsQ0FBQyxNQUFNLENBQUMsRUFBRSxDQUFDLEVBQUUsOEJBQVUsQ0FBQyxFQUFFLE1BQU0sRUFBRSxnQkFBTSxFQUFFLENBQUMsQ0FBQyxDQUFBO0FBRTlGLGNBQU0sQ0FBQyxHQUFHLENBQUMsV0FBVyxFQUFFLCtCQUFXLENBQUMsRUFBRSxXQUFXLEVBQUUsVUFBVSxFQUFFLENBQUMsQ0FBQyxDQUFDO0FBR2xFLE1BQU0sSUFBSSxHQUFHLFlBQUUsQ0FBQyxnQkFBZ0IsQ0FBQyxjQUFJLENBQUMsSUFBSSxDQUFDLFNBQVMsRUFBRSxxQkFBcUIsQ0FBQyxDQUFDLENBQUE7QUFDN0UsY0FBTSxDQUFDLEdBQUcsQ0FBQyxHQUFHLEVBQUUsQ0FBTyxHQUFHLEVBQUUsRUFBRTtJQUMxQixHQUFHLENBQUMsSUFBSSxHQUFHLE1BQU0sQ0FBQztJQUVsQixHQUFHLENBQUMsSUFBSSxHQUFHLElBQUksQ0FBQTtBQUNuQixDQUFDLENBQUEsQ0FBQyxDQUFDIn0=

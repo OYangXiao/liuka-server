@@ -9,7 +9,6 @@ import path from 'path';
 import http from 'http';
 
 import logger from 'koa-logger'
-import bodyParser from 'koa-bodyparser'
 
 import * as config from './config'
 import { router } from './router'
@@ -19,9 +18,6 @@ const app = module.exports = new Koa()
 
 //use system middlewares
 app.use(logger())
-app.use(bodyParser({
-    enableTypes: ['json']
-}))
 app.use(errMsgs);
 
 //use routes
