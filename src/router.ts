@@ -4,13 +4,12 @@ import fs from 'fs'
 import path from 'path'
 import { graphqlKoa, graphiqlKoa } from 'apollo-server-koa'
 
-import { schema } from './graphql/example'
+import { schema } from './graphql-schemas'
 
 export const router = new Router();
 
 router.get('/graphql', graphqlKoa({ schema: schema }))
 
-//
 router.post('/graphql', bodyParser({ enableTypes: ['json'] }), graphqlKoa({ schema: schema }))
 
 router.get('/graphiql', graphiqlKoa({ endpointURL: '/graphql' }));

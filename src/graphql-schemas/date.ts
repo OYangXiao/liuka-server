@@ -1,16 +1,11 @@
 import { GraphQLScalarType } from 'graphql';
 import { Kind } from 'graphql/language'
-import { makeExecutableSchema } from 'graphql-tools';
 
-const schemaString = `
+export const schemaString = `
     scalar Date
+`
 
-    type MyType {
-        created: Date
-    }
-`;
-
-const resolverFunctions = {
+export const resolver = {
     Date: new GraphQLScalarType({
         name: 'Date',
         description: 'Date custom scalar type, milliseconds of unix timestamp',
@@ -29,4 +24,3 @@ const resolverFunctions = {
     })
 };
 
-export const DateSchema = makeExecutableSchema({ typeDefs: schemaString, resolvers: resolverFunctions });
