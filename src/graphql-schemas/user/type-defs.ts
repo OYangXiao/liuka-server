@@ -6,7 +6,9 @@ export const typeDefs = `
 
         unm: String
         pic: String
-        sig: string
+        sig: String
+
+        regTime: Date
     }
 
     type Query {
@@ -14,8 +16,18 @@ export const typeDefs = `
     }
 
     type Mutation {
-        create (
+        createUser (
             phone: String!
         ): User
     }
-`
+`;
+
+export type tUser = {
+	_id: string;
+	id: number;
+	phone: string;
+	unm: string;
+	pic: string;
+	sig: string;
+	regTime?: any;
+};

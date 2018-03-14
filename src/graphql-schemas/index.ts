@@ -1,33 +1,18 @@
 import { makeExecutableSchema } from 'graphql-tools'
 
 import * as date from './date'
-// Some fake data
-const books = [
-    {
-        title: "Harry Potter and the Sorcerer's stone",
-        author: 'J.K. Rowling',
-    },
-    {
-        title: 'Jurassic Park',
-        author: 'Michael Crichton',
-    },
-];
+import * as user from './user'
 
 // The GraphQL schema in string form
 const typeDefs = [
     date.schemaString,
-    `
-        type Query { books: [Book] }
-        type Book { title: String, author: String }
-    `
+    user.typeDefs
 ];
 
 // The resolvers
 const resolvers = [
     date.resolver,
-    {
-        Query: { books: () => books }
-    }
+    user.resolvers
 ]
 
 // Put together a schema
