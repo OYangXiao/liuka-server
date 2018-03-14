@@ -11,12 +11,16 @@ let users: tUser[] = [
 	}
 ];
 
+// const userquery: IFieldResolver<any, any> = (_: any, { id }: { id: number }) => users.find((user) => user.id === id);
+
+// const usermutation: IFieldResolver<any, any> =
+
 export const resolvers = {
 	Query: {
-		user: (_: any, { id }: { id: number }) => users.find((user) => user.id === id)
+		user: (_: any, { id }: resolverParams) => users.find((user) => user.id === id)
 	},
 	Mutation: {
-		createUser: (_: any, { phone }: { phone: string }) => {
+		createUser: (_: any, { phone }: resolverParams) => {
 			const newuser: tUser = {
 				_id: (Math.random() * 10000000).toFixed(0).toString(),
 				id: 2,
