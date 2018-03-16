@@ -11,16 +11,13 @@ let users: tUser[] = [
 	}
 ];
 
-// const userquery: IFieldResolver<any, any> = (_: any, { id }: { id: number }) => users.find((user) => user.id === id);
-
-// const usermutation: IFieldResolver<any, any> =
-
 export const resolvers = {
 	Query: {
 		user: (_: any, { id }: resolverParams) => users.find((user) => user.id === id)
 	},
 	Mutation: {
-		createUser: (_: any, { phone }: resolverParams) => {
+		// 用于用户初次尝试注册帐号，必须要提供一个手机号或者email
+		phoneEmailFirstInit: (_: any, { phone }: resolverParams) => {
 			const newuser: tUser = {
 				_id: (Math.random() * 10000000).toFixed(0).toString(),
 				id: 2,
