@@ -1,34 +1,31 @@
-import { tUser } from './type-defs';
-
-let users: tUser[] = [
-	{
-		_id: 'awefawefeaweg',
-		id: 1,
-		phone: '123328473272',
-		unm: 'oyx',
-		pic: 'awefij',
-		sig: 'wefejaweoifij'
-	}
-];
+import mongoose from 'mongoose';
+const UserModel = mongoose.model('User');
 
 export const resolvers = {
 	Query: {
-		user: (_: any, { id }: resolverParams) => users.find((user) => user.id === id)
+		user: async () => {
+			const user = await UserModel.find().limit(1);
+			return user;
+		}
 	},
 	Mutation: {
 		// 用于用户初次尝试注册帐号，必须要提供一个手机号或者email
-		phoneEmailFirstInit: (_: any, { phone }: resolverParams) => {
-			const newuser: tUser = {
+		phoneEmailFirstInit: (_: any, { phone, email }: resolverParams) => {
+			const newuser = new UserModel({
 				_id: (Math.random() * 10000000).toFixed(0).toString(),
 				id: 2,
 				phone: phone,
+				email: email,
 				unm: 'any',
 				pic: 'w9ef',
 				sig: 'w8efwef8',
 				regTime: Date.now()
-			};
-			users.push(newuser);
-			return users[users.length - 1];
+			});
+			try {
+				newuser.save();
+			} catch (err) {
+				return newuser;
+			}
 		}
 	}
 };
