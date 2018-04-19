@@ -27,38 +27,20 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 import bcrypt from 'bcrypt-nodejs';
 
+const OAuthInfo = {
+	id: { type: String, index: true },
+	token: String,
+	name: String,
+	pic: String
+};
 const userSchema = new Schema({
-	disabled: Boolean,
-	password: String,
-	uid: { type: String, index: true /*, unique: true, sparse:true*/ },
-	wechat: {
-		id: { type: String, index: true },
-		token: String,
-		name: String,
-		pic: String
-	},
-	qq: {
-		id: { type: String, index: true },
-		token: String,
-		name: String,
-		pic: String
-	},
-	weibo: {
-		id: { type: String, index: true },
-		token: String,
-		name: String,
-		pic: String
-	},
-	facebook: {
-		id: { type: String, index: true },
-		token: String,
-		name: String,
-		pic: String,
-		email: String
-	},
-	email: { type: String, index: true },
-	phone: { type: String, index: true },
-
+	//首先支持4种账号登陆
+	wechat: OAuthInfo,
+	qq: OAuthInfo,
+	weibo: OAuthInfo,
+	facebook: OAuthInfo,
+	
+	disabled: Boolean, //用户是否已被封号
 	unm: String,
 	pic: String,
 	sig: String,
@@ -70,31 +52,16 @@ const userSchema = new Schema({
 	//是否参与内测
 	tester: Boolean,
 
-	settings: {
-		country: String,
-		province: String,
-		city: String,
-
-		school: String,
-		education: String, //学历
-		profession: String,
-
-		industry: String,
-		org: String,
-		job: String,
-
-		intro: String,
-
-		contact: String
-	},
-
 	//用户关注相关数据
-	note: {
-		savedUserCount: { type: Number, default: 0 },
-		savedCaseCount: { type: Number, default: 0 },
-		savedTagCount: { type: Number, default: 0 },
-		saveMeCount: { type: Number, default: 0 },
-		likeMeCount: { type: Number, default: 0 }
+	followSummary: {
+		followingCount: {
+			user: { type: Number, default: 0 },
+			case: { type: Number, default: 0 },
+			tag: { type: Number, default: 0 }
+		},
+
+		followedCount: { type: Number, default: 0 },
+		likedCount: { type: Number, default: 0 }
 	}
 	// ! 用户被另一个用户邀请了的记录
 	// invitedBy: {
