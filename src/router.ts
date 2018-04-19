@@ -4,7 +4,7 @@ import fs from 'fs'
 import path from 'path'
 import { graphqlKoa, graphiqlKoa } from 'apollo-server-koa'
 
-import { schema } from './graphql-schemas'
+import { schema } from './schemas'
 
 export const router = new Router();
 
